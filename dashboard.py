@@ -41,6 +41,10 @@ ESTRUCTURA = ("PIBT_2.xlsx", "Estructura porcentual")
 CONTRIBUCION = ("PIBT_2.xlsx", "Contribución a la variación nacional")
 HISTORICO = ("PIBT_r_2.xlsx", "Millones de pesos a precios de 2018")
 
+REPO_URL = "https://github.com/franciscojpc/APP_PIB_DE_CLASE_DE_PROGRAMACION"
+APP_URL = ("https://apppibdeclasedeprogramacion-"
+           "eeqyfrxvebbmfrnezg2o6e.streamlit.app/")
+
 COLOR_SECTOR = {
     "Primario": TEAL,
     "Secundario": AMBAR,
@@ -167,6 +171,12 @@ html, body, [class*="css"], .stApp {{
     margin: 8px 0 4px; color: {TINTA};
 }}
 .hero p {{ margin: 0; color: {APAGADO}; font-size: 13.5px; }}
+.hero-links {{ margin-top: 10px; font-family: 'Red Hat Mono', monospace; font-size: 12px; }}
+.hero-links a {{ color: {ACENTO}; text-decoration: none; }}
+.hero-links a:hover {{ text-decoration: underline; }}
+.hero-links .sep {{ color: {APAGADO}; margin: 0 8px; }}
+.rail-link {{ color: {ACENTO}; text-decoration: none; word-break: break-all; }}
+.rail-link:hover {{ text-decoration: underline; }}
 
 /* tarjetas KPI */
 .kpi {{
@@ -430,6 +440,8 @@ with st.sidebar:
         f'2018.<br><b>Actualizado:</b> '
         f'{pd.to_datetime(str(meta.get("FECHA DE ACTUALIZACIÓN", ""))).strftime("%d %b %Y")}'
         f'<br><b>Cobertura:</b> {meta.get("DESCRIPCIÓN PERIODO", "1993–2026")}'
+        f'<br><b>Código:</b> <a class="rail-link" href="{REPO_URL}" '
+        f'target="_blank" rel="noopener">{REPO_URL.replace("https://", "")}</a>'
         f'</div>', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------- portada
@@ -442,6 +454,11 @@ st.markdown(
     f'<h1>Producto Interno Bruto de México</h1>'
     f'<p>Serie trimestral {anio_min}–{anio_fin_trim} · 20 ramas de actividad · '
     f'cifras a precios constantes de 2018</p>'
+    f'<div class="hero-links">'
+    f'<a href="{REPO_URL}" target="_blank" rel="noopener">Código en GitHub ↗</a>'
+    f'<span class="sep">·</span>'
+    f'<a href="{APP_URL}" target="_blank" rel="noopener">App en vivo ↗</a>'
+    f'</div>'
     f'</div>', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------- KPIs
