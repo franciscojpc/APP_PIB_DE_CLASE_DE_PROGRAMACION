@@ -4,6 +4,10 @@ Dashboard interactivo del **Producto Interno Bruto Trimestral** del INEGI
 (año base 2018), construido con Streamlit y Plotly a partir de los tabulados
 en `tabulados_PIBT/`.
 
+**App en vivo:** <https://apppibdeclasedeprogramacion-eeqyfrxvebbmfrnezg2o6e.streamlit.app/>
+
+**Código fuente:** <https://github.com/franciscojpc/APP_PIB_DE_CLASE_DE_PROGRAMACION>
+
 ## Ejecutar
 
 ```bash
