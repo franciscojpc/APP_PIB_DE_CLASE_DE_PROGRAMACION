@@ -233,6 +233,13 @@ div[data-baseweb="select"] > div {{
 label, .stRadio label, .stMultiSelect label, .stSelectbox label {{
     color: {TINTA_2} !important; font-size: 12px !important;
 }}
+
+/* barra de herramientas de las gráficas */
+.js-plotly-plot .plotly .modebar {{ background: transparent !important; top: 2px; right: 4px; }}
+.js-plotly-plot .plotly .modebar-group {{ background: transparent !important; }}
+.js-plotly-plot .plotly .modebar-btn path {{ fill: rgba(195,194,183,.65) !important; }}
+.js-plotly-plot .plotly .modebar-btn:hover path,
+.js-plotly-plot .plotly .modebar-btn.active path {{ fill: {TINTA} !important; }}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -312,7 +319,19 @@ def tema(fig, altura=340, leyenda=True):
     return fig
 
 
-CONFIG_PLOT = {"displayModeBar": False, "responsive": True}
+# Barra de herramientas con zoom de acercar y alejar, paneo y restablecer.
+# scrollZoom permite usar la rueda del ratón en ambos sentidos.
+CONFIG_PLOT = {
+    "displayModeBar": "hover",
+    "displaylogo": False,
+    "responsive": True,
+    "scrollZoom": True,
+    "doubleClick": "reset",
+    "modeBarButtons": [[
+        "zoom2d", "pan2d", "zoomIn2d", "zoomOut2d",
+        "autoScale2d", "resetScale2d",
+    ]],
+}
 
 
 # ---------------------------------------------------------------- números base
@@ -516,6 +535,8 @@ with tabs[0]:
             fig.update_xaxes(
                 hoverformat="T%q %Y" if frecuencia == "Trimestral" else "%Y")
             st.plotly_chart(fig, width="stretch", config=CONFIG_PLOT)
+            st.caption("Rueda del ratón: acercar o alejar · arrastrar sobre una "
+                       "zona: hacer zoom · doble clic: restablecer.")
 
     col_a, col_b = st.columns(2, gap="medium")
     with col_a:
@@ -588,9 +609,12 @@ with tabs[0]:
             if not est.empty:
                 fig.update_yaxes(title_text="% del PIB", title_font=dict(size=11),
                                  range=[0, 100])
-                tema(fig, altura=300)
-                fig.update_layout(hovermode="x unified",
-                                  margin=dict(l=8, r=8, t=32, b=8))
+                tema(fig, altura=320)
+                fig.update_layout(
+                    hovermode="x unified",
+                    margin=dict(l=8, r=8, t=8, b=30),
+                    legend=dict(orientation="h", yanchor="top", y=-0.16, x=0,
+                                font=dict(size=11), bgcolor="rgba(0,0,0,0)"))
                 fig.update_traces(opacity=0.9)
                 st.plotly_chart(fig, width="stretch", config=CONFIG_PLOT)
 
